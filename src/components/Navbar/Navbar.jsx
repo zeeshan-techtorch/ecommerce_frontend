@@ -8,7 +8,7 @@ const Navbar = () => {
   const { logout }= useDispatcher();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const cartItemCount = 3;
+  const cartItemCount = 0;
 
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Navbar = () => {
       </div>
 
       <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
+        {/* <li><Link to="/">Home</Link></li> */}
       </ul>
 
       <div className="nav-actions">
