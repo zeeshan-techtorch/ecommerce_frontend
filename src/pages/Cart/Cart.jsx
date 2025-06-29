@@ -2,22 +2,7 @@ import React, { useState } from 'react';
 import './Cart.css';
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: '1',
-      name: 'Wireless Headphones',
-      price: 1999,
-      quantity: 1,
-      image: 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTgc-_tM7Sth9XVN7ll0ST1YMj5FAqQgzW8cuQRi_jHsDq98i_R3leYjKqXabxlgjGe11HzxcQWiol1lBJGzgzJHlum2SR-9Ry7k6hv65V78U4eS4ge0QN90iyYYPVPGovUDlSUPdajO1k&usqp=CAc',
-    },
-    {
-      id: '2',
-      name: 'Smart Watch',
-      price: 2999,
-      quantity: 1,
-      image: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSqZdE7RW3KHSB02rEjbJ_OiD9AypusiXM_9Ho7QjfEyYDOK_jMpYGR8047RnqOZFwGDazzyWmoVwPJdRJR9i1sMS9WgCR4O8_aiMQIeIjw",
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 

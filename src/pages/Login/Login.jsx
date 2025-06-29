@@ -17,11 +17,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await loginUser(form.email, form.password);
-        login(response);
-        setForm({email: '', password: ''})
-        navigate('/');
-        window.location.reload(); 
+      const response = await loginUser(form.email, form.password);
+      login(response);
+      setForm({ email: '', password: '' })
+      navigate('/');
+      window.location.reload();
     } catch (err) {
       toast.error(err.response.data.message)
     }
@@ -48,6 +48,9 @@ const Login = () => {
           onChange={handleChange}
           required
         />
+        <p className="forgot-password-link">
+          <a href="/forgot-password">Forgot Password?</a>
+        </p>
 
         <button type="submit">Login</button>
         <p className="register-link">

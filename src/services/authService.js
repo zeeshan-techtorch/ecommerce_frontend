@@ -27,3 +27,14 @@ export const logoutUser = async (refreshToken) => {
     throw error;
   }
 };
+
+
+export const forgetPassword = async (email)=>{
+  try {
+    const response = await API.post("/auth/forgot-password",{email})
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+
+}
