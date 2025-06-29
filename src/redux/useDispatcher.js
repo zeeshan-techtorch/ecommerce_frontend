@@ -13,6 +13,7 @@ const useDispatcher = () =>{
 
         logout: ()=>{
             dispatch(logout());
+            dispatch(clearLocalCart());
         },
 
 

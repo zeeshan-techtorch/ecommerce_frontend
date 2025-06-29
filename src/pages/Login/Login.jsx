@@ -4,11 +4,12 @@ import './Login.css'; // CSS for styling
 import { loginUser } from '../../services/authService';
 import useDispatcher from '../../redux/useDispatcher';
 import { toast } from 'react-toastify';
+import { getCart } from '../../services/cartService';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const navigate = useNavigate();
-  const { login } = useDispatcher();
+  const { login, setCart } = useDispatcher();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,9 +20,14 @@ const Login = () => {
     try {
       const response = await loginUser(form.email, form.password);
       login(response);
+
+       // Fetch cart from DB
+
+       const cartData = await getCart();
+       setCart(cartData.CartItems)
       setForm({ email: '', password: '' })
       navigate('/');
-      window.location.reload();
+      // window.location.reload();
     } catch (err) {
       toast.error(err.response.data.message)
     }

@@ -3,18 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import './Navbar.css';
 import useDispatcher from '../../redux/useDispatcher';
-
+import { useCartSelector } from '../../redux/useSelectors';
 const Navbar = () => {
   const { logout }= useDispatcher();
+  const {cart } = useCartSelector();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-  const cartItemCount = 0;
+  const cartItemCount = cart.length;
 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     setIsLoggedIn(!!storedUser);
-  },[]);
+  });
 
   const handleLogout = () => {
     logout()
