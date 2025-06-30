@@ -4,6 +4,8 @@ import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import './Navbar.css';
 import useDispatcher from '../../redux/useDispatcher';
 import { useCartSelector } from '../../redux/useSelectors';
+
+
 const Navbar = () => {
   const { logout }= useDispatcher();
   const {cart } = useCartSelector();
@@ -13,8 +15,8 @@ const Navbar = () => {
 
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    setIsLoggedIn(!!storedUser);
+    const accessToken = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!accessToken);
   });
 
   const handleLogout = () => {

@@ -11,14 +11,13 @@ import { useAuthSelector } from './redux/useSelectors';
 
 function App() {
     const { setCart } = useDispatcher();
-    const { isAuthenticated } = useAuthSelector();
+    const { isAuthenticated  } = useAuthSelector();
 
     useEffect(()=>{
-
      const  getCartItem = async ()=>{
        try {
         const cartData = await getCart();
-        setCart(cartData.CartItems)
+        setCart(cartData.CartItems);
        } catch (error) {
         toast.error(error.response.data.message)
        }
