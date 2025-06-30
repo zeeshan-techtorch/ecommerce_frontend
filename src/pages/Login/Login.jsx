@@ -20,14 +20,16 @@ const Login = () => {
     try {
       const response = await loginUser(form.email, form.password);
       login(response);
-
-       // Fetch cart from DB
-
+       if(response.user.role === "Admin"){
+          navigate('/admin/dashboard');
+       }else{
+        // Fetch cart from DB
        const cartData = await getCart();
        setCart(cartData.CartItems)
       setForm({ email: '', password: '' })
       navigate('/');
-      // window.location.reload();
+       }
+
     } catch (err) {
       toast.error(err.response.data.message)
     }

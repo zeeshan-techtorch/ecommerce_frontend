@@ -6,11 +6,13 @@ import Register from '../pages/Register/Register';
 import ProductDetail from '../pages/ProductDetail/ProductDetail';
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword/ResetPassword';
-
+import AdminRoutes from './AdminRoutes';
 
 const AppRoutes = () => {
   return (
     <Routes>
+
+      {/* Public Routes */}
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -18,6 +20,11 @@ const AppRoutes = () => {
       <Route path="/cart" element={< Cart/>} />
       <Route path="/register" element={< Register/>} />
       <Route path="/products/:product_id" element={<ProductDetail />} />
+
+
+      {/* Admin and User Routes */}
+      <Route path="/*" element={<AdminRoutes />} />
+
     </Routes>
   );
 };

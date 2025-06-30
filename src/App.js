@@ -12,6 +12,7 @@ import { useAuthSelector } from './redux/useSelectors';
 function App() {
     const { setCart } = useDispatcher();
     const { isAuthenticated  } = useAuthSelector();
+    
 
     useEffect(()=>{
      const  getCartItem = async ()=>{
