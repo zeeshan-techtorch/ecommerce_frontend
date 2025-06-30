@@ -13,7 +13,6 @@ function App() {
     const { setCart } = useDispatcher();
     const { isAuthenticated } = useAuthSelector();
 
-
     useEffect(()=>{
 
      const  getCartItem = async ()=>{

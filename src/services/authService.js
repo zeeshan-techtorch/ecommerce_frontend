@@ -38,3 +38,13 @@ export const forgetPassword = async (email)=>{
   }
 
 }
+
+export const resetPassword = async (token,password) =>{
+  try {
+     const resonse= await API.post(`/auth/reset-password/${token}`, {newPassword: password,});
+     return resonse.data;
+    
+  } catch (error) {
+    
+  }
+}
