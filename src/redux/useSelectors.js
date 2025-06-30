@@ -1,6 +1,12 @@
 import { useSelector } from "react-redux";
 
 
+export const useAuthSelector = () =>{
+    return {
+        isAuthenticated: useSelector((state)=>state.auth.isAuthenticated)
+    }
+}
+
 export const useCartSelector = ()=>{
     return{
         cart: useSelector((state) => state.cart.cartItems), 
@@ -9,3 +15,5 @@ export const useCartSelector = ()=>{
         
     }
 };
+
+

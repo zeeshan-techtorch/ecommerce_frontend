@@ -1,9 +1,8 @@
 import './Cart.css';
-import { useCartSelector }  from "../../redux/useSelectors"
+import { useCartSelector }  from "../../redux/useSelectors";
 
 const Cart = () => {
   const { cart } = useCartSelector();
-
 
   const totalPrice = cart.reduce((total, item) => total + item.Product.price * item.quantity, 0);
 
