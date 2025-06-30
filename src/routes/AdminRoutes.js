@@ -1,9 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-
-// Admin Pages
-import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
-
+import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
+import AddProduct from "../pages/Admin/AddProduct/AddProduct";
+import AdminLayout from "../layouts/AdminLayout"
 const AdminRoutes = () => {
   return (
     <Routes>
@@ -11,10 +10,23 @@ const AdminRoutes = () => {
         path="/admin/dashboard"
         element={
           <ProtectedRoute allowedRoles={["Admin"]}>
-            <AdminDashboard />
+            <AdminLayout>
+              <AdminDashboard />
+            </AdminLayout>
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/add-product"
+        element={
+          <ProtectedRoute allowedRoles={["Admin"]}>
+            <AdminLayout>
+              <AddProduct />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+
     </Routes>
   );
 };
