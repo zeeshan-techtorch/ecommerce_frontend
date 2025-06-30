@@ -3,30 +3,52 @@ import { useParams } from 'react-router-dom';
 import './ProductDetail.css';
 import { getProductById } from '../../services/productService';
 import getImagePath from '../../utils/getImageURL';
+import { useAuthSelector } from '../../redux/useSelectors';
+import { toast } from 'react-toastify';
+import { addToCart } from '../../services/cartService';
+import useDispatcher from '../../redux/useDispatcher';
+import { getCart } from '../../services/cartService';
 
 const ProductDetail = () => {
   const { product_id } = useParams();
   const [product, setProduct] = useState(null);
-    
+  const { isAuthenticated } = useAuthSelector();
+  const { setCart } = useDispatcher();
+
   // Simulate fetching product by product_id
   useEffect(() => {
-   const getProductBy_Id = async ()=>{
-    try {
-      const response = await getProductById(product_id);
-      setProduct(response)
-    } catch (error) {
-      console.log(error);
+    const getProductBy_Id = async () => {
+      try {
+        const response = await getProductById(product_id);
+        setProduct(response)
+      } catch (error) {
+        console.log(error);
+      }
     }
-   }
 
-   getProductBy_Id()
-
+    getProductBy_Id()
 
   }, [product_id]);
 
-  const handleAddToCart = () => {
-    // Replace this with actual cart logic (Redux or Context)
-    alert(`Added "${product.name}" to cart!`);
+
+
+  const handleAddToCart = async () => {
+    if (isAuthenticated) {
+      try {
+        const response = await addToCart(product_id);
+        toast.success(response.message);
+
+        const cartData = await getCart();
+        setCart(cartData.CartItems)
+
+      } catch (error) {
+        toast.error(error.response.data.error);
+      }
+    }
+    else {
+      toast.warning("Login required.")
+    }
+
   };
 
   if (!product) return <div>Loading...</div>;

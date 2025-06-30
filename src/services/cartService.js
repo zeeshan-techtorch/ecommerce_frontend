@@ -9,9 +9,9 @@ export const getCart = async ()=>{
     }
 }
 
-export const addToCart = async (product)=>{
+export const addToCart = async (product_id)=>{
     try {
-        const response = await API.post("/cart", product);
+        const response = await API.post("/cart", {product_id});
         return response.data
     } catch (error) {
         throw error;
@@ -19,9 +19,9 @@ export const addToCart = async (product)=>{
 }
 
 
-export const removeFromCart = async (product_id)=>{
+export const removeFromCart = async (cartItem_id)=>{
     try {
-        const response = await API.delete(`/cart/${product_id}`);
+        const response = await API.delete(`/cart/${cartItem_id}`);
         return response.data
     } catch (error) {
         throw error;
