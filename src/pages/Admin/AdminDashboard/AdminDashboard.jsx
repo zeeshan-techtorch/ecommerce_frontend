@@ -14,6 +14,7 @@ const AdminDashboard = () => {
       const response = await getAllProducts();
       setProducts(response);
     } catch (error) {
+      console.log("####333",error)
       toast.error(error?.response?.data?.message)
     }
    }
@@ -26,6 +27,10 @@ const AdminDashboard = () => {
     try {
       const res = await removeProduct(product_id);
       toast.success(res.message)
+
+      const response = await getAllProducts();
+      setProducts(response);
+      
     } catch (error) {
       toast.error(error.response.data.error)
     }
