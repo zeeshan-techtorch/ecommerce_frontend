@@ -1,5 +1,5 @@
 import './AdminDashboard.css';
-import { getAllProducts } from '../../../services/productService';
+import { getAllProducts, removeProduct } from '../../../services/productService';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import getImageURL from "../../../utils/getImageURL"
@@ -13,7 +13,6 @@ const AdminDashboard = () => {
     try {
       const response = await getAllProducts();
       setProducts(response);
-      console.log(products)
     } catch (error) {
       toast.error(error?.response?.data?.message)
     }
@@ -23,8 +22,13 @@ const AdminDashboard = () => {
   },[])
 
 
-  const handleRemove = (id) => {
-    alert(`Remove product with id ${id}`);
+  const handleRemove = async (product_id) => {
+    try {
+      const res = await removeProduct(product_id);
+      toast.success(res.message)
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
   };
 
   return (
@@ -45,7 +49,7 @@ const AdminDashboard = () => {
             <div>₹{product.price}</div>
             <div>{product.Category.name}</div>
             <div>
-              <button className="remove-btn" onClick={() => handleRemove(product.id)}>Remove</button>
+              <button className="remove-btn" onClick={() => handleRemove(product.product_id)}>Remove</button>
             </div>
           </div>
         ))}

@@ -32,3 +32,12 @@ export const addProduct = async (product) => {
         throw error;
     }
 }
+
+export const removeProduct = async (product_id)=>{
+    try {
+        const response = await API.delete(`/products/${product_id}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

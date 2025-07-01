@@ -3,7 +3,7 @@ import { useCartSelector } from "../../redux/useSelectors";
 import { removeFromCart as removeItem, getCart } from "../../services/cartService";
 import useDispatcher from "../../redux/useDispatcher"
 import { toast } from 'react-toastify';
-
+import getImageURL from "../../utils/getImageURL"
 
 const Cart = () => {
   const { cart } = useCartSelector();
@@ -38,7 +38,7 @@ const Cart = () => {
               <div className="cart-items">
                 {cart.map((item) => (
                   <div key={item.cartItem_id} className="cart-item">
-                    <img src={item.Product.image} alt={item.Product.name} />
+                    <img src={getImageURL(item.Product.image)} alt={item.Product.name} />
                     <div className="item-info">
                       <h4>{item.Product.name}</h4>
                       <p>Price: ₹{item.Product.price}</p>
