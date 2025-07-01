@@ -1,6 +1,8 @@
 // src/pages/admin/AddProduct.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AddProduct.css';
+import { fetchCategories } from '../../../services/categoryService';
+import { toast } from 'react-toastify';
 
 const AddProduct = () => {
   const [form, setForm] = useState({
@@ -11,6 +13,9 @@ const AddProduct = () => {
     image: '',
     category_id: '',
   });
+  const [categories, setCategories] = useState([]);
+
+  
 
 
   const handleChange = e => {
@@ -19,89 +24,129 @@ const AddProduct = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-  
+    console.log("####333",form)
+
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const previewURL = URL.createObjectURL(file);
+      setForm(prev => ({
+        ...prev,
+        image: file,             // the File object for upload
+        imagePreview: previewURL // used for preview
+      }));
+    }
+  }
+
+  useEffect(()=>{
+      const getCategories = async ()=>{
+        try {
+          const res = await fetchCategories();
+          setCategories(res);
+        } catch (error) {
+          toast.error(error.response.data.error)
+        }
+      }
+      getCategories();
+  },[])
   return (
+
+    <div className="form-container">
+      <h2 className="form-title">Add New Product</h2>
+      <form className="product-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Product Name</label>
+          <input
+            type="text"
+            name="name"
+            required
+            value={form.name}
+            onChange={handleChange}
+          // placeholder="e.g. iPhone 14"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Description</label>
+          <textarea
+            name="description"
+            value={form.description}
+            onChange={handleChange}
+          // placeholder="Enter product description"
+          />
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label>Price</label>
+            <input
+              type="number"
+              name="price"
+              required
+              value={form.price}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Stock</label>
+            <input
+              type="number"
+              name="stock"
+              required
+              value={form.stock}
+              onChange={handleChange}
     
-      <div className="form-container">
-        <h2 className="form-title">Add New Product</h2>
-        <form className="product-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Product Name</label>
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Upload Image</label>
+          <div className="custom-file-input-wrapper">
+            <label htmlFor="image-upload" className="upload-btn">Choose Image</label>
             <input
-              type="text"
-              name="name"
-              required
-              value={form.name}
-              onChange={handleChange}
-              placeholder="e.g. iPhone 14"
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: 'none' }}
             />
-          </div>
-
-          <div className="form-group">
-            <label>Description</label>
-            <textarea
-              name="description"
-              value={form.description}
-              onChange={handleChange}
-              placeholder="Enter product description"
-            />
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>Price</label>
-              <input
-                type="number"
-                name="price"
-                required
-                value={form.price}
-                onChange={handleChange}
-                placeholder="e.g. 999"
+            {form.imagePreview && (
+              <img
+                src={form.imagePreview}
+                alt="Preview"
+                className="image-preview"
               />
-            </div>
-
-            <div className="form-group">
-              <label>Stock</label>
-              <input
-                type="number"
-                name="stock"
-                required
-                value={form.stock}
-                onChange={handleChange}
-                placeholder="e.g. 20"
-              />
-            </div>
+            )}
           </div>
+        </div>
 
-          <div className="form-group">
-            <label>Image URL</label>
-            <input
-              type="text"
-              name="image"
-              value={form.image}
-              onChange={handleChange}
-              placeholder="https://..."
-            />
-          </div>
 
-          <div className="form-group">
-            <label>Category ID</label>
-            <input
-              type="text"
-              name="category_id"
-              required
-              value={form.category_id}
-              onChange={handleChange}
-              placeholder="e.g. a71b-1234-... (UUID)"
-            />
-          </div>
 
+        <div className="form-group">
+          <label>Category</label>
+          <select
+            name="category_id"
+            value={form.category_id}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Category</option>
+            {categories.map(cat => (
+              <option key={cat.category_id} value={cat.category_id}>{cat.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className='add-product-button'>
           <button type="submit" className="submit-btn">Add Product</button>
-        </form>
-      </div>
-    
+        </div>
+      </form>
+    </div>
+
   );
 };
 

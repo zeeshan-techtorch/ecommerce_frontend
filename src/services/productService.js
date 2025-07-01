@@ -19,3 +19,4 @@ export const  getProductById = async (product_id) =>{
         throw error;
     }
 }
+
