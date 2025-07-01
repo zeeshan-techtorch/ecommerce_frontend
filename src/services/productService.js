@@ -1,17 +1,17 @@
 import API from "./api"
 
 // Get all products
-export const getAllProducts = async () =>{
+export const getAllProducts = async () => {
     try {
-        const response = await API.get('/products/get-all-product');
-        return response.data;  
+        const response = await API.get('/products/');
+        return response.data;
     } catch (error) {
         throw error;
     }
 }
 
 
-export const  getProductById = async (product_id) =>{
+export const getProductById = async (product_id) => {
     try {
         const response = await API.get(`/products/${product_id}`);
         return response.data;
@@ -20,3 +20,15 @@ export const  getProductById = async (product_id) =>{
     }
 }
 
+export const addProduct = async (product) => {
+    try {
+        const response = await API.post("/products", product, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}

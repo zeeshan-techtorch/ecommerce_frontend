@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './AddProduct.css';
 import { fetchCategories } from '../../../services/categoryService';
 import { toast } from 'react-toastify';
+import { addProduct } from '../../../services/productService';
 
 const AddProduct = () => {
   const [form, setForm] = useState({
@@ -10,21 +11,36 @@ const AddProduct = () => {
     description: '',
     price: '',
     stock: '',
-    image: '',
+    image: 'null',
     category_id: '',
   });
   const [categories, setCategories] = useState([]);
 
-  
-
 
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === 'image') {
+      setForm({ ...form, image: e.target.files[0] }); // handle file
+    } else {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    console.log("####333",form)
+    try {
+      const res = await addProduct(form);
+      toast.success(res.message);
+      setForm({
+        name: '',
+        description: '',
+        price: '',
+        stock: '',
+        image: 'null',
+        category_id: '',
+      })
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
 
   };
 
@@ -40,17 +56,17 @@ const AddProduct = () => {
     }
   }
 
-  useEffect(()=>{
-      const getCategories = async ()=>{
-        try {
-          const res = await fetchCategories();
-          setCategories(res);
-        } catch (error) {
-          toast.error(error.response.data.error)
-        }
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const res = await fetchCategories();
+        setCategories(res);
+      } catch (error) {
+        toast.error(error.response.data.error)
       }
-      getCategories();
-  },[])
+    }
+    getCategories();
+  }, [])
   return (
 
     <div className="form-container">
@@ -98,7 +114,7 @@ const AddProduct = () => {
               required
               value={form.stock}
               onChange={handleChange}
-    
+
             />
           </div>
         </div>
