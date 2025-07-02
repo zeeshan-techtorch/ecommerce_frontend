@@ -4,11 +4,12 @@ import { removeFromCart as removeItem, getCart } from "../../services/cartServic
 import useDispatcher from "../../redux/useDispatcher"
 import { toast } from 'react-toastify';
 import getImageURL from "../../utils/getImageURL"
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const { cart } = useCartSelector();
   const { setCart } = useDispatcher();
-
+  const navgation = useNavigate();
   const totalPrice = cart.reduce((total, item) => total + item.Product.price * item.quantity, 0);
 
   const deleteItem = async (cartItem_id) => {
@@ -54,7 +55,7 @@ const Cart = () => {
                   <h3><span>Total </span><span>₹ {totalPrice}</span></h3>
                 </div>
                 <div className='checkout-btn-container'>
-                  <button className="checkout-btn">Proceed to Checkout</button>
+                  <button className="checkout-btn" onClick={()=>navgation('/checkout')} >Proceed to Checkout</button>
                 </div>
               </div>
             </div>

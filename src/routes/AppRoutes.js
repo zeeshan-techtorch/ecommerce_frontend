@@ -7,6 +7,8 @@ import ProductDetail from '../pages/ProductDetail/ProductDetail';
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword/ResetPassword';
 import AdminRoutes from './AdminRoutes';
+import ProtectedRoute from './ProtectedRoute';
+import Checkout from '../pages/Checkout/Checkout';
 
 const AppRoutes = () => {
   return (
@@ -17,9 +19,17 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
-      <Route path="/cart" element={< Cart/>} />
-      <Route path="/register" element={< Register/>} />
+      <Route path="/cart" element={< Cart />} />
+      <Route path="/register" element={< Register />} />
       <Route path="/products/:product_id" element={<ProductDetail />} />
+      <Route
+        path="/checkout"
+        element={
+          <ProtectedRoute allowedRoles={["User"]}>
+            <Checkout />
+          </ProtectedRoute>
+          } 
+        />
 
 
       {/* Admin and User Routes */}
