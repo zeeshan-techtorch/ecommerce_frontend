@@ -27,10 +27,19 @@ const Checkout = () => {
     try {
       const res = await createOrder(form);
       toast.success(res.message)
+      navigate("/my-orders")
+      setForm({
+        address: '',
+        city: '',
+        postalCode: '',
+        country: '',
+        paymentMethod: 'COD',
+      })
+
     } catch (error) {
       toast.error(error.response.data.error || error.response.data.message)
     }
-    
+
   };
 
   const totalPrice = cart.reduce((total, item) => total + item.Product.price * item.quantity, 0);
@@ -58,11 +67,11 @@ const Checkout = () => {
 
             </div>
           ))}
-           <div className="order-total">
-          <h3>Total Amount: ₹ {totalPrice}</h3>
+          <div className="order-total">
+            <h3>Total Amount: ₹ {totalPrice}</h3>
+          </div>
         </div>
-        </div>
-       
+
 
 
         {/* Shipping Address Form */}
