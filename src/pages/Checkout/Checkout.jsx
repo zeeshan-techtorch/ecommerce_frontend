@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import './Checkout.css';
 import { useNavigate } from 'react-router-dom';
 import { useCartSelector } from "../../redux/useSelectors";
-import getImageURL from "../../utils/getImageURL"
+import getImageURL from "../../utils/getImageURL";
+import { createOrder } from '../../services/orderService';
+import { toast } from 'react-toastify';
 const Checkout = () => {
   const navigate = useNavigate();
   const { cart } = useCartSelector();
@@ -22,6 +24,13 @@ const Checkout = () => {
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     // Handle order placement logic
+    try {
+      const res = await createOrder(form);
+      toast.success(res.message)
+    } catch (error) {
+      toast.error(error.response.data.error || error.response.data.message)
+    }
+    
   };
 
   const totalPrice = cart.reduce((total, item) => total + item.Product.price * item.quantity, 0);

@@ -79,3 +79,21 @@
   background-color: #e60000;
 }
 
+.orders-link {
+  margin-left: 15px;
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 6px 10px;
+  background-color: #007bff;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.orders-link:hover {
+  background-color: #0056b3;
+}
+
+

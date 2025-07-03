@@ -9,6 +9,7 @@ import ResetPassword from '../pages/ResetPassword/ResetPassword';
 import AdminRoutes from './AdminRoutes';
 import ProtectedRoute from './ProtectedRoute';
 import Checkout from '../pages/Checkout/Checkout';
+import MyOrders from '../pages/MyOrders/MyOrders';
 
 const AppRoutes = () => {
   return (
@@ -27,6 +28,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["User"]}>
             <Checkout />
+          </ProtectedRoute>
+          } 
+        />
+
+         <Route
+        path="/my-orders"
+        element={
+          <ProtectedRoute allowedRoles={["User"]}>
+            <MyOrders />
           </ProtectedRoute>
           } 
         />
