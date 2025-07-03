@@ -5,6 +5,7 @@ import { loginUser } from '../../services/authService';
 import useDispatcher from '../../redux/useDispatcher';
 import { toast } from 'react-toastify';
 import { getCart } from '../../services/cartService';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -20,18 +21,18 @@ const Login = () => {
     try {
       const response = await loginUser(form.email, form.password);
       login(response);
-       if(response.user.role === "Admin"){
-          navigate('/admin/dashboard');
-       }else{
+      if (response.user.role === "Admin") {
+        navigate('/admin/dashboard');
+      } else {
         // Fetch cart from DB
-       const cartData = await getCart();
-       setCart(cartData.CartItems)
-      setForm({ email: '', password: '' })
-      navigate('/');
-       }
+        const cartData = await getCart();
+        setCart(cartData.CartItems)
+        setForm({ email: '', password: '' })
+        navigate('/');
+      }
 
     } catch (err) {
-      toast.error(err.response.data.message)
+      toast.error(err.response.data.message || "Something went wrong.")
     }
   };
 
@@ -57,12 +58,12 @@ const Login = () => {
           required
         />
         <p className="forgot-password-link">
-          <a href="/forgot-password">Forgot Password?</a>
+          <Link to="/forgot-password">Forgot Password?</Link>
         </p>
 
         <button type="submit">Login</button>
         <p className="register-link">
-          Don't have an account? <a href="/register">Register</a>
+          Don't have an account? <Link to="/register">Register</Link>
         </p>
       </form>
     </div>
