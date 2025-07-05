@@ -5,6 +5,8 @@ import { useCartSelector } from "../../redux/useSelectors";
 import getImageURL from "../../utils/getImageURL";
 import { createOrder } from '../../services/orderService';
 import { toast } from 'react-toastify';
+import { createStripeSession } from '../../services/paymentService';
+
 const Checkout = () => {
   const navigate = useNavigate();
   const { cart } = useCartSelector();
@@ -24,20 +26,30 @@ const Checkout = () => {
   const handlePlaceOrder = async (e) => {
     e.preventDefault();
     // Handle order placement logic
-    try {
-      const res = await createOrder(form);
-      toast.success(res.message)
-      navigate("/my-orders")
-      setForm({
-        address: '',
-        city: '',
-        postalCode: '',
-        country: '',
-        paymentMethod: 'COD',
-      })
+    if (form.paymentMethod === 'Online') {
+      try {
+        const res = await createStripeSession();
+        window.location.href = res.url; // Redirect to Stripe
+      } catch (err) {
+        toast.error('Stripe error: ' + err.response?.data?.message || err.message);
+      }
+    }
+    else {
+      try {
+        const res = await createOrder(form);
+        toast.success(res.message)
+        navigate("/my-orders")
+        setForm({
+          address: '',
+          city: '',
+          postalCode: '',
+          country: '',
+          paymentMethod: 'COD',
+        })
 
-    } catch (error) {
-      toast.error(error.response.data.error || error.response.data.message)
+      } catch (error) {
+        toast.error(error.response.data.error || error.response.data.message)
+      }
     }
 
   };

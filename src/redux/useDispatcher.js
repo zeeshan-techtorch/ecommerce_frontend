@@ -33,9 +33,6 @@ const useDispatcher = () =>{
         decreaseQuantity:(product_id)=>{
             dispatch(decreaseQuantity(product_id));
         },
-        clearLocalCart:()=>{
-            dispatch(clearLocalCart());
-        }
 
     }
 };

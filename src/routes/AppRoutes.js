@@ -10,6 +10,7 @@ import AdminRoutes from './AdminRoutes';
 import ProtectedRoute from './ProtectedRoute';
 import Checkout from '../pages/Checkout/Checkout';
 import MyOrders from '../pages/MyOrders/MyOrders';
+import PaymentSuccess from '../pages/Success/Success';
 
 const AppRoutes = () => {
   return (
@@ -40,6 +41,9 @@ const AppRoutes = () => {
           </ProtectedRoute>
           } 
         />
+
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+
 
 
       {/* Admin and User Routes */}
